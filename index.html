@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindMe - College Lost & Found Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- STICKY APPNAR HEADER -->
+    <header class="app-header show">
+        <div class="app-logo">
+            <span>🌐</span> FindMe <span>Portal</span>
+        </div>
+
+        <!-- SESSION / USER DEMO SWAPPER -->
+        <div class="session-badge-container">
+            <div id="app-session-badge" class="session-badge">Loading...</div>
+            <button class="signout-btn" onclick="handlePortalSignOut()">Sign Out</button>
+        </div>
+    </header>
+
+    <!-- NOTIFICATION SYSTEM -->
+    <div id="portal-alert" class="portal-alert">
+        <span style="font-size: 1.25rem;">⚡</span>
+        <div class="noti-message" style="font-weight: 600;">System message initialized</div>
+    </div>
+
+    <!-- MAIN PORTAL VIEWPORT GRID -->
+    <div class="portal-main-layout">
+        
+        <!-- Side Navigation Menu -->
+        <aside class="prototype-sidebar">
+            <div>
+                <!-- STUDENT NAVIGATION LINKS -->
+                <div id="student-sidebar-nav">
+                    <div class="sidebar-title">Student Operations</div>
+                    <ul class="sidebar-nav-list">
+                        <li id="sidebar-catalog-btn" class="sidebar-nav-item active" onclick="switchDemoTab('catalog', this)">🔍 Search Directory</li>
+                        <li class="sidebar-nav-item" onclick="switchDemoTab('report-lost', this)">➕ Report Lost Item</li>
+                        <li class="sidebar-nav-item" onclick="switchDemoTab('report-found', this)">📦 Report Found Item</li>
+                        <li class="sidebar-nav-item" onclick="switchDemoTab('track-claims', this)">📋 Track My Claims</li>
+                    </ul>
+                </div>
+
+                <!-- ADMIN NAVIGATION LINKS -->
+                <div id="admin-sidebar-nav" style="display: none;">
+                    <div class="sidebar-title">Oversight Panel</div>
+                    <ul class="sidebar-nav-list">
+                        <li id="sidebar-dashboard-btn" class="sidebar-nav-item" onclick="switchDemoTab('admin-dashboard', this)">📊 Stats Dashboard</li>
+                        <li class="sidebar-nav-item" onclick="switchDemoTab('admin-claims', this)">⏳ Claim Verification</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="font-size: 0.75rem; color: #64748b; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                DBMS Mock Session v1.0
+            </div>
+        </aside>
+
+        <!-- Main Interactive Workspace -->
+        <main class="prototype-workspace">
+
+            <!-- PANEL A: STUDENT SEARCH CATALOG -->
+            <div id="panel-catalog" class="demo-panel" style="display: block;">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🔍 Search Lost & Found Directory</h2>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">Direct SQL indexing simulation active</span>
+                </div>
+
+                <div class="search-controls">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon-svg">🔍</span>
+                        <input type="text" class="search-bar-input" placeholder="Search items by description, keyword, or student USN..." onkeyup="triggerDemoSearch(this.value)">
+                    </div>
+                    <div class="category-tags">
+                        <span class="category-tag active" onclick="setDemoCategoryFilter('all', this)">All Categories</span>
+                        <span class="category-tag" onclick="setDemoCategoryFilter('bag', this)">💼 Bags</span>
+                        <span class="category-tag" onclick="setDemoCategoryFilter('phone', this)">📱 Phones</span>
+                        <span class="category-tag" onclick="setDemoCategoryFilter('keys', this)">🔑 Keys</span>
+                        <span class="category-tag" onclick="setDemoCategoryFilter('laptop', this)">💻 Laptops</span>
+                        <span class="category-tag" onclick="setDemoCategoryFilter('idcard', this)">🪪 ID Cards</span>
+                    </div>
+                </div>
+
+                <!-- Items Card Grid -->
+                <div id="web-catalog-grid" class="catalog-cards-grid">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- PANEL B: REPORT LOST ITEM FORM WITH REAL IMAGE UPLOAD -->
+            <div id="panel-report-lost" class="demo-panel" style="display: none;">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">➕ Publish Lost Item Notice</h2>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">BLOB database streaming active</span>
+                </div>
+
+                <div class="form-grid">
+                    <!-- Forms left -->
+                    <div style="background-color: white; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <div class="form-group">
+                            <label class="form-label">What item did you lose? (Description)</label>
+                            <input type="text" id="lost-form-title" class="form-input" placeholder="e.g. Blue HP Laptop Charger inside a black leather case">
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px;">
+                            <div class="form-group">
+                                <label class="form-label">Student Name</label>
+                                <input type="text" id="lost-form-name" class="form-input" placeholder="e.g. Aishu R. Kumar">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">University Seat No (USN)</label>
+                                <input type="text" id="lost-form-usn" class="form-input" placeholder="e.g. 1RV24CS015">
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px;">
+                            <div class="form-group">
+                                <label class="form-label">Contact Mobile No</label>
+                                <input type="text" id="lost-form-contact" class="form-input" placeholder="e.g. 9876543210">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Department</label>
+                                <input type="text" id="lost-form-dept" class="form-input" placeholder="e.g. Computer Science">
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px;">
+                            <div class="form-group">
+                                <label class="form-label">Location Lost</label>
+                                <input type="text" id="lost-form-loc" class="form-input" placeholder="e.g. Physics Lab B, Desk 4">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Item Category</label>
+                                <select id="lost-form-category" class="form-input" style="padding: 0 8px;">
+                                    <option value="bag">💼 Bag / Backpack</option>
+                                    <option value="phone">📱 Phone / Electronic</option>
+                                    <option value="keys">🔑 Keys / Chain</option>
+                                    <option value="laptop">💻 Laptop / Tech</option>
+                                    <option value="idcard">🪪 ID Card / Badge</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="form-submit-btn" onclick="submitPortalLostItem()">Submit & Sync Database</button>
+                    </div>
+
+                    <!-- Image uploading right -->
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <label class="form-label" style="font-size: 0.9rem;">Upload Item Photograph Proof</label>
+                        
+                        <!-- Real file input hidden but triggered on box click -->
+                        <input type="file" id="portal-file-input" style="display: none;" accept="image/*">
+                        <div id="portal-upload-zone" class="form-upload-zone" onclick="document.getElementById('portal-file-input').click()">
+                            <div class="form-upload-prompt">
+                                <div style="font-size: 2rem;">📁</div>
+                                <div style="font-weight: bold; margin-top: 5px;">Upload Proof Image</div>
+                                <div style="font-size: 0.7rem;">Click to browse local files</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: var(--brand-50); border: 1px solid var(--brand-100); border-radius: 8px; padding: 12px; font-size: 0.75rem; line-height: 1.5; color: var(--brand-900);">
+                            <strong>💡 Student tip:</strong> Uploading a real photo enables instant match matching using file array binaries inside SQL BLOB queries!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL C: REPORT FOUND ITEM FORM -->
+            <div id="panel-report-found" class="demo-panel" style="display: none;">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">📦 Register Found Belonging</h2>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">Securing safe custodian chains</span>
+                </div>
+
+                <div class="form-grid">
+                    <!-- Forms left -->
+                    <div style="background-color: white; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <div class="form-group">
+                            <label class="form-label">What item was found? (Description)</label>
+                            <input type="text" id="found-form-title" class="form-input" placeholder="e.g. Casio Scientific Calculator FX-991EX">
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="form-group">
+                                <label class="form-label">Where did you find it?</label>
+                                <input type="text" id="found-form-loc" class="form-input" placeholder="e.g. Cafeteria Table 4">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Item Category</label>
+                                <select id="found-form-category" class="form-input" style="padding: 0 8px;">
+                                    <option value="bag">💼 Bag / Backpack</option>
+                                    <option value="phone">📱 Phone / Electronic</option>
+                                    <option value="keys">🔑 Keys / Chain</option>
+                                    <option value="laptop">💻 Laptop / Tech</option>
+                                    <option value="idcard">🪪 ID Card / Badge</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Current Safe Custody Location *</label>
+                            <select id="found-form-safe" class="form-input" style="padding: 0 8px;">
+                                <option value="Security Room">Security Room</option>
+                                <option value="College Office">College Office</option>
+                                <option value="Lab Incharge">Lab Incharge</option>
+                            </select>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label">Finder Name</label>
+                                <input type="text" id="found-form-finder-name" class="form-input" placeholder="e.g. Aishu R. Kumar">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label">Finder Contact No</label>
+                                <input type="text" id="found-form-finder-contact" class="form-input" placeholder="e.g. 9876543210">
+                            </div>
+                        </div>
+
+                        <button class="form-submit-btn" onclick="submitPortalFoundItem()" style="background-color: var(--accent-emerald);">Register Found Item</button>
+                    </div>
+
+                    <!-- Image uploading right -->
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <label class="form-label" style="font-size: 0.9rem;">Upload Found Item Photograph</label>
+                        
+                        <input type="file" id="found-file-input" style="display: none;" accept="image/*">
+                        <div id="found-upload-zone" class="form-upload-zone" onclick="document.getElementById('found-file-input').click()">
+                            <div class="form-upload-prompt">
+                                <div style="font-size: 2rem;">📁</div>
+                                <div style="font-weight: bold; margin-top: 5px;">Upload Found Image</div>
+                                <div style="font-size: 0.7rem;">Click to browse local files</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: var(--brand-50); border: 1px solid var(--brand-100); border-radius: 8px; padding: 12px; font-size: 0.75rem; line-height: 1.5; color: var(--brand-900);">
+                            <strong>💡 Custody tip:</strong> Attaching an image helps students verify their claimed objects instantly on inspection checks!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL D: TRACK STUDENT CLAIMS -->
+            <div id="panel-track-claims" class="demo-panel" style="display: none;">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">📋 Track My Submitted Claims</h2>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">Verifying owner match integrity checks</span>
+                </div>
+
+                <div class="claims-table-container">
+                    <div class="claims-table-header" style="background-color: var(--brand-700);">
+                        🎫 ACTIVE OWNER INTEGRITY MATCH TICKETS
+                    </div>
+                    <table class="claims-table">
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Item Title</th>
+                                <th>Filing Date</th>
+                                <th>Verification Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-claims-tbody">
+                            <!-- Dynamic claims lines -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PANEL E: ADMIN DASHBOARD STATS -->
+            <div id="panel-admin-dashboard" class="demo-panel" style="display: none;">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">📊 Supervisor Control Center Dashboard</h2>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">Real-time SQL aggregators active</span>
+                </div>
+
+                <div class="admin-stats-container">
+                    <div class="admin-stat-card">
+                        <span class="admin-stat-title">Total Database Logs</span>
+                        <span id="stat-total-logs" class="admin-stat-number">5</span>
+                    </div>
+                    <div class="admin-stat-card pending">
+                        <span class="admin-stat-title">Pending Claim Matches</span>
+                        <span id="stat-active-claims" class="admin-stat-number">2</span>
+                    </div>
+                    <div class="admin-stat-card returned">
+                        <span class="admin-stat-title">Resolved Recoveries</span>
+                        <span id="stat-returned-logs" class="admin-stat-number">1</span>
+                    </div>
+                    <div class="admin-stat-card" style="border-left-color: #6366f1;">
+                        <span class="admin-stat-title">Audit Rating</span>
+                        <span class="admin-stat-number">100%</span>
+                    </div>
+                </div>
+
+                <div style="background-color: white; border-radius: 12px; border:1px solid var(--border-color); padding: 1.5rem; text-align: center; color: var(--text-muted);">
+                    <h3 style="font-weight: 700; color: var(--primary-900); text-align: left; margin-bottom: 1rem;">System Activity Alerts</h3>
+                    <p style="font-size: 0.9rem; text-align: left; line-height: 1.5;">🟢 JDBC driver connection verified dynamically on thread safety pools.<br>🟢 Auto-vacuum database cleanups running dynamically in background pools.</p>
+                </div>
+            </div>
+
+            <!-- PANEL F: ADMIN CLAIMS VERIFICATION -->
+            <div id="panel-admin-claims" class="demo-panel" style="display: none;">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">⏳ Active Verification Claim Tickets</h2>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">ACID Transaction integrity gates active</span>
+                </div>
+
+                <div class="claims-table-container">
+                    <div class="claims-table-header">
+                        📋 STUDENT IDENTITY MATCH CHECKPOINTS
+                    </div>
+                    <table class="claims-table">
+                        <thead>
+                            <tr>
+                                <th>Claim ID</th>
+                                <th>Lost Belonging</th>
+                                <th>Student Name</th>
+                                <th>USN</th>
+                                <th>Contact</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-claims-tbody">
+                            <!-- Populated dynamically from slides.js state -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- CLAIM VERIFICATION MODAL DIALOG -->
+    <div id="claim-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>📁 File Ownership Claim Match</h3>
+                <button class="close-modal-btn" onclick="closeClaimModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="claim-item-id">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label class="form-label">Student Name</label>
+                        <input type="text" id="claim-form-name" class="form-input" placeholder="Enter student name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">University Seat No (USN)</label>
+                        <input type="text" id="claim-form-usn" class="form-input" placeholder="e.g. 1RV24CS015">
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label class="form-label">Contact Number</label>
+                        <input type="text" id="claim-form-contact" class="form-input" placeholder="e.g. 9876543210">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Department</label>
+                        <select id="claim-form-dept" class="form-input" style="padding: 0 8px;">
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Information Science">Information Science</option>
+                            <option value="Electronics & Comm">Electronics & Comm</option>
+                            <option value="Mechanical Eng">Mechanical Eng</option>
+                            <option value="Civil Eng">Civil Eng</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Proof of Ownership Description *</label>
+                    <textarea id="claim-form-proof" class="form-input" style="height: 60px; padding: 6px 10px;" placeholder="e.g. Color of the keyboard stickers, purchase receipt details..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Additional Identification Details</label>
+                    <input type="text" id="claim-form-details" class="form-input" placeholder="e.g. Registered MAC Address, serial number prefix">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Supporting Image / ID Proof</label>
+                    <input type="file" id="claim-file-input" style="display: none;" accept="image/*">
+                    <div id="claim-upload-zone" class="form-upload-zone" style="height: 70px;" onclick="document.getElementById('claim-file-input').click()">
+                        <div id="claim-upload-prompt" class="form-upload-prompt" style="font-size: 0.75rem;">
+                            <span style="font-size: 1.25rem;">📁</span>
+                            <div>Click to browse supporting proof image</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="form-submit-btn" onclick="submitPortalClaimDetails()" style="background-color: var(--brand-600); margin-top: 10px;">Submit Claim Notice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS CONTROLLER ATTACHMENT -->
+    <script src="slides.js"></script>
+</body>
+</html>

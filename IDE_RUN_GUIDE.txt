@@ -1,0 +1,111 @@
+==========================================================================
+             FINDME PORTAL - VS CODE & IDE EXECUTION GUIDE
+         How to Run both Frontend & Backend in VS Code and Other IDEs
+==========================================================================
+
+This guide walks you through importing, configuring, and running your College 
+Lost & Found Portal project within popular development tools, with a primary 
+focus on Visual Studio Code (VS Code), IntelliJ IDEA, and Eclipse.
+
+--------------------------------------------------------------------------
+SECTION 1: RUNNING THE FRONTEND PROTOTYPE (login.html & index.html)
+--------------------------------------------------------------------------
+
+OPTION A: Visual Studio Code (Recommended)
+------------------------------------------
+1. Open VS Code.
+2. Go to File -> Open Folder... and select the project directory:
+   c:\Users\Aishu\OneDrive\Desktop\lostandfoundportal1
+3. Install the "Live Server" Extension:
+   - Click the Extensions icon on the left sidebar (or press Ctrl+Shift+X).
+   - Search for "Live Server" (by Ritwick Dey).
+   - Click "Install".
+4. Run the application:
+   - Open the Explorer sidebar (Ctrl+Shift+E).
+   - Right-click "login.html".
+   - Select "Open with Live Server" (or click "Go Live" at the bottom right).
+   - Your browser will launch automatically at http://127.0.0.1:5500/login.html.
+   - Toggling Student/Admin credentials and signing in will seamlessly 
+     redirect you to the dashboard.
+
+OPTION B: Any Web Browser (No installation needed)
+--------------------------------------------------
+- Simply double-click "login.html" inside your file explorer. It will run 
+  directly via the file:// protocol in your web browser.
+
+---
+
+--------------------------------------------------------------------------
+SECTION 2: RUNNING THE JAVA & MYSQL BACKEND (src/ Folder)
+--------------------------------------------------------------------------
+Before starting, ensure that:
+1. Java Development Kit (JDK 8 or higher, preferably JDK 17/21) is installed.
+2. MySQL Server is installed, running, and initialized using "schema.sql".
+3. You have downloaded the MySQL JDBC Connector JAR file:
+   - Link: https://dev.mysql.com/downloads/connector/j/
+   - Select Platform Independent, download the zip, and extract 
+     "mysql-connector-j-x.x.x.jar".
+
+OPTION A: Running in Visual Studio Code (VS Code)
+--------------------------------------------------
+1. Install Java Extensions:
+   - Go to Extensions (Ctrl+Shift+X) and install "Extension Pack for Java" 
+     (by Microsoft).
+2. Configure classpath dependencies (Adding the MySQL JDBC JAR):
+   - In the Explorer sidebar, look at the bottom left panel for the 
+     "Java Projects" section.
+   - Expand the project dropdown, then find and expand "Referenced Libraries".
+   - Click the "+" icon next to "Referenced Libraries".
+   - Browse to where you saved your downloaded "mysql-connector-j-x.x.x.jar" 
+     file, select it, and click "Add".
+3. Check DB Credentials:
+   - Open src/com/lostandfound/database/DBConnection.java.
+   - Update the URL, USER, and PASSWORD variables to match your local 
+     MySQL database settings.
+4. Run the Client:
+   - Open src/com/lostandfound/ui/LoginFrame.java.
+   - Click the "Run" or "Debug" links hovering directly above the 
+     "public static void main" method, or press F5.
+   - The Java Swing window will pop up.
+
+OPTION B: Running in IntelliJ IDEA (Community or Ultimate)
+----------------------------------------------------------
+1. Import Project:
+   - Open IntelliJ IDEA.
+   - Click Open, browse to c:\Users\Aishu\OneDrive\Desktop\lostandfoundportal1, 
+     and select it.
+2. Add JDBC Dependency:
+   - Go to File -> Project Structure (or press Ctrl+Alt+Shift+S).
+   - In the left pane, click on Modules.
+   - Select the Dependencies tab in the middle pane.
+   - Click the "+" button at the bottom/right and choose JARs or Directories...
+   - Browse and select your "mysql-connector-j-x.x.x.jar" file.
+   - Check the box next to it and click Apply / OK.
+3. Run the Client:
+   - Navigate through the project tree to src/com/lostandfound/ui/LoginFrame.java.
+   - Right-click "LoginFrame.java" and select Run 'LoginFrame.main()'.
+
+OPTION C: Running in Eclipse IDE
+--------------------------------
+1. Import Project:
+   - Open Eclipse.
+   - Go to File -> Import... -> General -> Existing Projects into Workspace.
+   - Choose Select root directory, browse to select the folder 
+     c:\Users\Aishu\OneDrive\Desktop\lostandfoundportal1, and click Finish.
+2. Add JDBC Library:
+   - Right-click the project name in Package Explorer.
+   - Select Build Path -> Configure Build Path...
+   - Go to the Libraries tab.
+   - If using a modern Eclipse version, click on Classpath, then click 
+     Add External JARs... on the right.
+   - Select your "mysql-connector-j-x.x.x.jar" file.
+   - Click Apply and Close.
+3. Run the Client:
+   - Expand the project structure to src/com/lostandfound/ui/LoginFrame.java.
+   - Right-click "LoginFrame.java" and select Run As -> Java Application.
+
+==========================================================================
+* Troubleshooting Tip: If you get a "ClassNotSupportedException" or
+  "com.mysql.cj.jdbc.Driver not found" error, ensure that the JDBC JAR 
+  file is correctly referenced in your IDE's library settings as shown above.
+==========================================================================

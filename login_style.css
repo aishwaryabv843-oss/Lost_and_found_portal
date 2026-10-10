@@ -1,0 +1,668 @@
+/* ==========================================================================
+   "FINDME" PORTAL - FUTURISTIC CYBER-GLASS STYLING SYSTEM
+   Theme: Cyber Navy, Neon Purple, Glowing Cyan, and Clean White
+   ========================================================================== */
+
+/* --- CORE THEMING TOKENS --- */
+:root {
+    /* Color Palette */
+    --neon-purple: #a855f7;
+    --neon-cyan: #06b6d4;
+    --neon-cyan-glow: rgba(6, 182, 212, 0.35);
+    --neon-purple-glow: rgba(168, 85, 247, 0.35);
+    --neon-emerald: #10b981;
+    --neon-emerald-glow: rgba(16, 185, 129, 0.4);
+    
+    /* Dark Mode Defaults */
+    --bg-base: #020617; /* Slate 950 */
+    --bg-gradient-1: #0f172a; /* Slate 900 */
+    --bg-gradient-2: #1e1b4b; /* Indigo 950 */
+    
+    --card-bg: rgba(15, 23, 42, 0.55);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-glow: rgba(99, 102, 241, 0.15);
+    
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --input-bg: rgba(15, 23, 42, 0.65);
+    --input-border: rgba(255, 255, 255, 0.12);
+    
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'Fira Code', monospace;
+    
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- LIGHT MODE VARIABLE OVERRIDES --- */
+[data-theme="light"] {
+    --bg-base: #f1f5f9; /* Slate 100 */
+    --bg-gradient-1: #e2e8f0; /* Slate 200 */
+    --bg-gradient-2: #dbeafe; /* Blue 100 */
+    
+    --card-bg: rgba(255, 255, 255, 0.6);
+    --card-border: rgba(15, 23, 42, 0.08);
+    --card-glow: rgba(59, 130, 246, 0.1);
+    
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --input-bg: rgba(255, 255, 255, 0.7);
+    --input-border: rgba(15, 23, 42, 0.15);
+}
+
+/* --- FOUNDATIONS & SYSTEM RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    min-height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color var(--transition-smooth);
+}
+
+/* --- ANIMATED GRADIENT BACKGROUND --- */
+.gradient-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-base) 50%, var(--bg-gradient-2) 100%);
+    z-index: 1;
+    transition: background var(--transition-smooth);
+    background-size: 200% 200%;
+    animation: gradient-move 15s ease infinite;
+}
+
+@keyframes gradient-move {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- MOUSE TRACKING GLOW LIGHT --- */
+.mouse-glow-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--card-glow), transparent 40%);
+}
+
+/* --- FLOATING PARTICLES CANVAS --- */
+.particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* --- ANTI-GRAVITY FLOATING HOLOGRAM OBJECTS --- */
+.floating-item {
+    position: absolute;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.25;
+    filter: drop-shadow(0 0 10px var(--neon-cyan-glow));
+    transition: filter var(--transition-smooth), opacity var(--transition-smooth);
+}
+
+body[data-theme="light"] .floating-item {
+    opacity: 0.35;
+    filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.25));
+}
+
+/* Floating animations with keyframes */
+.float-1 { top: 12%; left: 8%; animation: float-slow-1 12s ease-in-out infinite alternate; }
+.float-2 { top: 22%; right: 10%; animation: float-slow-2 15s ease-in-out infinite alternate; }
+.float-3 { bottom: 15%; left: 12%; animation: float-slow-3 10s ease-in-out infinite alternate; }
+.float-4 { bottom: 10%; right: 15%; animation: float-slow-4 14s ease-in-out infinite alternate; }
+.float-5 { top: 48%; left: 3%; animation: float-slow-5 13s ease-in-out infinite alternate; }
+.float-6 { top: 58%; right: 5%; animation: float-slow-6 11s ease-in-out infinite alternate; }
+
+@keyframes float-slow-1 {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-25px) rotate(8deg); }
+}
+@keyframes float-slow-2 {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(30px) rotate(-12deg); }
+}
+@keyframes float-slow-3 {
+    0% { transform: translateX(0) translateY(0) rotate(0deg); }
+    100% { transform: translateX(15px) translateY(-20px) rotate(6deg); }
+}
+@keyframes float-slow-4 {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-35px) rotate(-8deg); }
+}
+@keyframes float-slow-5 {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(20px) rotate(10deg); }
+}
+@keyframes float-slow-6 {
+    0% { transform: translateX(0) translateY(0) rotate(0deg); }
+    100% { transform: translateX(-15px) translateY(-25px) rotate(-6deg); }
+}
+
+/* --- THEME TOGGLE CONTROLLER --- */
+.theme-switch-container {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 100;
+}
+
+.theme-switch-btn {
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast);
+}
+
+.theme-switch-btn:hover {
+    transform: scale(1.05);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan-glow);
+}
+
+/* --- HEADER TEXT AND TAGLINE --- */
+.header-section {
+    position: absolute;
+    top: 6%;
+    text-align: center;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.project-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.project-title span {
+    background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px var(--neon-cyan-glow));
+}
+
+.project-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.typing-tagline {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--neon-cyan);
+    margin-top: 5px;
+    border-right: 2px solid var(--neon-cyan);
+    padding-right: 5px;
+    animation: cursor-blink 0.8s step-end infinite;
+    white-space: nowrap;
+}
+
+@keyframes cursor-blink {
+    50% { border-color: transparent; }
+}
+
+/* --- CYBER-GLASS CARD CONTAINER --- */
+.login-card-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 460px;
+    border-radius: 20px;
+    padding: 2px; /* For animated gradient border */
+    background: linear-gradient(135deg, var(--card-border) 0%, transparent 100%);
+    transition: background var(--transition-smooth);
+}
+
+/* Dynamic rotating gradient border on hover */
+.login-card-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    z-index: -1;
+    background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
+    opacity: 0.15;
+    transition: opacity var(--transition-smooth);
+}
+
+.login-card-container:hover::before {
+    opacity: 0.4;
+}
+
+/* The actual glass card body */
+.cyber-glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 18px;
+    padding: 2.5rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: var(--shadow-xl);
+}
+
+.card-title-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 0.25rem;
+}
+
+.card-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* --- SEPARATE LOGIN ROLE SELECTOR TILES --- */
+.role-tiles-container {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.role-tile {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
+    user-select: none;
+}
+
+.role-tile:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.role-tile-icon {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+}
+
+.role-tile-lbl {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.role-tile-desc {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    line-height: 1.3;
+}
+
+/* Active Tile configurations */
+.role-tile.active-student {
+    background-color: rgba(6, 182, 212, 0.08);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+}
+
+.role-tile.active-admin {
+    background-color: rgba(168, 85, 247, 0.08);
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+}
+
+/* --- FORM PANELS ANIMATIONS WRAPPER --- */
+.auth-panel-wrapper {
+    overflow: hidden;
+    position: relative;
+    min-height: 290px;
+}
+
+.auth-form-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    position: absolute;
+    width: 100%;
+    transition: all var(--transition-smooth) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#login-form-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+#register-form-panel {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(50px);
+}
+
+.auth-panel-wrapper.register-active #login-form-panel {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50px);
+}
+
+.auth-panel-wrapper.register-active #register-form-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+/* Glass Inputs */
+.cyber-input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cyber-input-box {
+    position: relative;
+    width: 100%;
+}
+
+.cyber-input-box svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.cyber-input {
+    width: 100%;
+    height: 44px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    padding: 0 14px 0 2.5rem;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.cyber-input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan-glow);
+}
+
+.cyber-input:focus + svg {
+    color: var(--neon-cyan);
+}
+
+/* Password Toggle Icon */
+.password-toggle-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.password-toggle-btn:hover {
+    color: var(--text-primary);
+}
+
+/* Extras row: Remember me & Forgot Password */
+.form-extras-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+}
+
+.cyber-checkbox {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--neon-cyan);
+    cursor: pointer;
+}
+
+.forgot-pass-link {
+    color: var(--neon-cyan);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity var(--transition-fast);
+}
+
+.forgot-pass-link:hover {
+    opacity: 0.8;
+}
+
+/* Submit Action Button */
+.cyber-btn {
+    width: 100%;
+    height: 46px;
+    background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all var(--transition-fast), transform var(--transition-fast) ease-out;
+    box-shadow: 0 4px 15px var(--neon-cyan-glow);
+}
+
+.cyber-btn:hover {
+    box-shadow: 0 4px 20px var(--neon-cyan-glow), 0 0 15px var(--neon-purple-glow);
+    transform: translateY(-1px);
+}
+
+.cyber-btn:active {
+    transform: translateY(1px);
+}
+
+/* Loading animations inside Button */
+.btn-loader {
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255,255,255,0.3);
+    border-top: 2.5px solid white;
+    border-radius: 50%;
+    animation: btn-spin 0.6s linear infinite;
+    display: none;
+}
+
+@keyframes btn-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Toggle Account Dialog Links */
+.panel-switch-prompt {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.panel-switch-link {
+    color: var(--neon-purple);
+    text-decoration: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.panel-switch-link:hover {
+    opacity: 0.8;
+}
+
+/* --- SUCCESS POPUP MODAL (GLOWING DIALOG) --- */
+.success-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(2, 6, 23, 0.8);
+    backdrop-filter: blur(12px);
+    z-index: 1100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-smooth);
+}
+
+.success-modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.success-card {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid var(--neon-emerald);
+    box-shadow: 0 0 30px var(--neon-emerald-glow);
+    border-radius: 16px;
+    width: 380px;
+    padding: 2.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    transform: translateY(20px) scale(0.95);
+    transition: all var(--transition-smooth) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.success-modal-overlay.show .success-card {
+    transform: translateY(0) scale(1);
+}
+
+.success-icon-badge {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(16, 185, 129, 0.15);
+    border: 2px solid var(--neon-emerald);
+    border-radius: 50%;
+    color: var(--neon-emerald);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    filter: drop-shadow(0 0 10px var(--neon-emerald-glow));
+}
+
+.success-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: white;
+}
+
+.success-desc {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+.success-loading-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background-color: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.success-loading-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--neon-emerald);
+}
+
+/* --- RESPONSIVENESS AND MOBILE SHIFTS --- */
+@media (max-width: 640px) {
+    .header-section {
+        top: 4%;
+    }
+    .project-title {
+        font-size: 2.2rem;
+    }
+    .login-card-container {
+        max-width: 90%;
+    }
+    .cyber-glass-card {
+        padding: 2rem 1.5rem;
+    }
+    .floating-item {
+        opacity: 0.15;
+    }
+}

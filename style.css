@@ -1,0 +1,650 @@
+/* ==========================================================================
+   "FINDME" PORTAL - SHARP FULLSCREEN DASHBOARD DESIGN SYSTEM
+   Theme: College Sapphire Blue, Dark Slate, Accent Emerald & Amber
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+
+:root {
+    --primary-900: #0f172a;
+    --primary-800: #1e293b;
+    --primary-700: #334155;
+    --primary-600: #475569;
+    --primary-500: #64748b;
+    
+    --brand-900: #1e3a8a;
+    --brand-800: #1e40af;
+    --brand-700: #1d4ed8;
+    --brand-600: #2563eb;
+    --brand-500: #3b82f6;
+    --brand-100: #dbeafe;
+    --brand-50: #eff6ff;
+
+    --accent-emerald: #10b981;
+    --accent-emerald-soft: #d1fae5;
+    --accent-emerald-dark: #065f46;
+    
+    --accent-amber: #f59e0b;
+    --accent-amber-soft: #fef3c7;
+    --accent-amber-dark: #b45309;
+
+    --accent-rose: #f43f5e;
+    --accent-rose-soft: #ffe4e6;
+
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'Fira Code', monospace;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- ROOT STYLINGS --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- DOCK HEADER (SLIM & PRECISE) --- */
+.app-header {
+    width: 100%;
+    height: 60px; /* Slimmer header saving vertical space */
+    background-color: #0f172a;
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    z-index: 500;
+    flex-shrink: 0;
+}
+
+.app-logo {
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.app-logo span {
+    background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.session-badge-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.session-badge {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #cbd5e1;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+}
+
+.signout-btn {
+    background-color: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.signout-btn:hover {
+    background-color: rgba(239, 68, 68, 0.3);
+    color: white;
+}
+
+/* --- FULLSCREEN LAYOUT SPLIT --- */
+.portal-main-layout {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 60px);
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* --- COMPACT SIDEBAR --- */
+.prototype-sidebar {
+    width: 250px;
+    background-color: #0f172a;
+    border-right: 1px solid #1e293b;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.sidebar-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--brand-400);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+}
+
+.sidebar-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar-nav-item {
+    color: #94a3b8;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all var(--transition-fast);
+}
+
+.sidebar-nav-item:hover,
+.sidebar-nav-item.active {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: white;
+}
+
+.sidebar-nav-item.active {
+    background-color: var(--brand-600);
+}
+
+/* --- MAXIMIZED WORKSPACE PANEL --- */
+.prototype-workspace {
+    flex: 1;
+    padding: 2rem;
+    background-color: #f8fafc;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+}
+
+.workspace-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary-900);
+}
+
+/* --- DYNAMIC FILTER / SEARCH CONTROLS --- */
+.search-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-bar-input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0 1rem 0 2.25rem;
+    font-size: 0.88rem;
+    outline: none;
+}
+
+.search-bar-input:focus {
+    border-color: var(--brand-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-icon-svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.category-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.category-tag {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.category-tag.active {
+    background-color: var(--brand-600);
+    color: white;
+    border-color: var(--brand-600);
+}
+
+/* --- SHARP ITEMS CATALOG GRID --- */
+.catalog-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.item-card {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color var(--transition-fast);
+}
+
+.item-card:hover {
+    border-color: var(--brand-400);
+}
+
+.item-card-image {
+    width: 100%;
+    height: 140px;
+    background-color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #94a3b8;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.item-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-card-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.item-card-body {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.item-card-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary-900);
+    line-height: 1.35;
+}
+
+.item-card-meta {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item-card-meta div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.item-card-btn {
+    width: 100%;
+    height: 32px;
+    background-color: var(--brand-50);
+    color: var(--brand-600);
+    border: 1px solid var(--brand-100);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.item-card-btn:hover {
+    background-color: var(--brand-600);
+    color: white;
+    border-color: var(--brand-600);
+}
+
+.badge-pending { background-color: var(--accent-amber-soft); color: var(--accent-amber-dark); }
+.badge-claimed { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.badge-under-verification { background-color: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
+.badge-ready-for-collection { background-color: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+.badge-returned { background-color: var(--accent-emerald-soft); color: var(--accent-emerald-dark); }
+.badge-completed { background-color: var(--accent-emerald-soft); color: var(--accent-emerald-dark); }
+.badge-rejected { background-color: var(--accent-rose-soft); color: var(--accent-rose); }
+.badge-found { background-color: var(--brand-100); color: var(--brand-700); }
+
+/* --- COMPACT FORMS --- */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--primary-700);
+    margin-bottom: 4px;
+}
+
+.form-input {
+    width: 100%;
+    height: 36px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 0.82rem;
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: var(--brand-500);
+}
+
+.form-upload-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-upload-zone:hover {
+    border-color: var(--brand-500);
+    background-color: var(--brand-50);
+}
+
+.form-upload-preview {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form-upload-prompt {
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.form-submit-btn {
+    height: 38px;
+    background-color: var(--brand-600);
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    width: 100%;
+}
+
+/* --- STATS OVERVIEW --- */
+.admin-stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-stat-card {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    border-left: 4px solid var(--brand-500);
+}
+
+.admin-stat-card.pending { border-left-color: var(--accent-amber); }
+.admin-stat-card.returned { border-left-color: var(--accent-emerald); }
+
+.admin-stat-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.admin-stat-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-900);
+    margin-top: 3px;
+}
+
+/* --- SHARP TABLES --- */
+.claims-table-container {
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.claims-table-header {
+    background-color: var(--primary-900);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.claims-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.claims-table th, 
+.claims-table td {
+    padding: 0.75rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.claims-table th {
+    background-color: #f8fafc;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.claims-table td {
+    font-size: 0.82rem;
+}
+
+.claims-table tr:hover td {
+    background-color: #f8fafc;
+}
+
+.verify-claim-btn {
+    height: 28px;
+    background-color: var(--accent-emerald);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.verify-claim-btn:hover {
+    background-color: #059669;
+}
+
+.demo-panel {
+    display: none;
+}
+
+/* --- ALERTS NOTIFICATIONS --- */
+.portal-alert {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0f172a;
+    color: white;
+    border-left: 4px solid var(--brand-500);
+    padding: 10px 16px;
+    border-radius: 6px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    z-index: 1000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.portal-alert.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* --- CLAIM MODAL DIALOG POPUPS (BLUE SAAS STYLING) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.6); /* Slate 900 background with transparency */
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-card {
+    background-color: white;
+    width: 90%;
+    max-width: 520px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    animation: modalScaleUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalScaleUp {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    background-color: #0f172a;
+    padding: 12px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.modal-header h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-modal-btn:hover {
+    color: white;
+}
+
+.modal-body {
+    padding: 1.25rem 1.5rem 1.5rem 1.5rem;
+}
